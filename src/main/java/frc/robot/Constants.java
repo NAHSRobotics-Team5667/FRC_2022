@@ -17,7 +17,7 @@ public final class Constants {
         public final static int kFrontLeftId = -1;
         public final static int kFrontRightId = -1;
         public final static int kBackLeftId = -1;
-        public final static int kFrontRightId = -1;
+        public final static int kBackRightId = -1;
         
         public final static double kGearRatio = 8 / 62;
     }
