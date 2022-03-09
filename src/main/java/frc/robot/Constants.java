@@ -25,6 +25,14 @@ public final class Constants {
         public final static double kWheelDiameter = Units.inchesToMeters(4);
     }
 
+    public static final class IndexConstants {
+        public final static int kSpinnyMotorId = -1;
+        public final static int kPistonOfIntakeId = -1;
+        public final static double kGearRatio = -1;
+        
+    }
+
+
     public final static class ControllerConstants {
         public static final int CONTROLLER_PORT = 0; // Controller port
 
@@ -56,3 +64,4 @@ public final class Constants {
         public static final int BUTTON_START_PORT = 7; // Start button
     }
 }
+   
