@@ -127,10 +127,20 @@ public class Controller extends XboxController {
         return super.getLeftBumperPressed();
     }
     
+    /**
+     * Checks to see if bumper is pressed down.
+     * 
+     * @return Boolean (true) bumper is down / (false) bumper is up
+     */
     public boolean getLeftBumper() {
         return super.getLeftBumper();
     }
 
+    /**
+     * Checks to see if bumper is pressed down.
+     * 
+     * @return Boolean (true) bumper is down / (false) bumper is up
+     */
     public boolean getRightBumper() {
         return super.getRightBumper();
     }
