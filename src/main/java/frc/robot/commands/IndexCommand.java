@@ -3,8 +3,6 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
-import frc.robot.utils.Controller;
-import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.IndexSubsysytem;
@@ -26,10 +24,10 @@ public class IndexCommand extends CommandBase {
     if (RobotContainer.controller.getRightTrigger() > 0) {
       index.indexSpeed(.31);
       index.indexGoPew(false);
-    } else if (RobotContainer.controller.getLeftTrigger() > 0)
+    } else if (RobotContainer.controller.getLeftTrigger() > 0) {
       index.indexSpeed(.31);
       index.indexGoPew(true);
-    } else{
+    } else {
       index.indexSpeed(0);
       index.indexGoPew(true);
     }

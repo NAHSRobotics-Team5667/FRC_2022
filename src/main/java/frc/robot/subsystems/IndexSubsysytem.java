@@ -14,14 +14,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class IndexSubsysytem extends SubsystemBase {  
-  public Solenoid s_indexPisston;
+  public Solenoid s_indexPiston;
   public WPI_TalonFX m_indexMotor;
 
   /** Creates a new IndexSubsysytem. */
   public IndexSubsysytem() {
     
    
-    s_indexPisston = new Solenoid(PneumaticsModuleType.REVPH ,Constants.IndexConstants.kSolenoidOfIntake);
+    s_indexPiston = new Solenoid(PneumaticsModuleType.REVPH ,Constants.IndexConstants.kSolenoidOfIntake);
     m_indexMotor = new WPI_TalonFX(Constants.IndexConstants.kSpinnyMotorId);
     m_indexMotor.setNeutralMode(NeutralMode.Brake);
     
@@ -31,8 +31,8 @@ public class IndexSubsysytem extends SubsystemBase {
     m_indexMotor.set(ControlMode.PercentOutput, fastness);
   }
    
-  public void indexGoPew(boolean pisston) {
-    s_indexPisston.set(pisston);
+  public void indexGoPew(boolean piston) {
+    s_indexPiston.set(piston);
   }
 
   @Override

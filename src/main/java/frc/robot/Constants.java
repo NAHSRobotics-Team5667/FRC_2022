@@ -26,9 +26,9 @@ public final class Constants {
     }
 
     public static final class IndexConstants {
-        public final static int kSpinnyMotorId = -1;
-        public final static int kPistonOfIntakeId = -1;
+        public final static int kSpinnyMotorId = 2;
         public final static double kGearRatio = -1;
+        public final static int kSolenoidOfIntake = -1;
         
     }
 
