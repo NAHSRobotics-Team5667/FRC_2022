@@ -87,7 +87,7 @@ public class ClimbSubsystem extends SubsystemBase {
    * 
    * @param inches target inches of extension.
    */
-  public void setVDiagonalPosition(double inches) {
+  public void setDiagonalPosition(double inches) {
     double target = inchesToTicks(inches);
     if (!m_leftDiagonalController.atSetpoint() && !m_rightDiagonalController.atSetpoint()) {
       m_leftDiagonal.set(ControlMode.PercentOutput, m_leftDiagonalController.calculate(diagonalPositions[0], target));
