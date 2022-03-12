@@ -33,8 +33,10 @@ public final class Constants {
     }
 
     public static final class ClimbConstants {
-        public final static int kForwardMotorId = 0; //PLACEHOLDER, NEEDS TO REPLACED WITH PROPER VALUE
-        public final static int kBackwardMotorId = 0; //PLACEHOLDER, NEEDS TO REPLACED WITH PROPER VALUE
+        public final static int kForwardMotor = 0; //PLACEHOLDER, NEEDS TO REPLACED WITH PROPER VALUE
+        public final static int kBackwardMotor = 0; //PLACEHOLDER, NEEDS TO REPLACED WITH PROPER VALUE
+        public final static int kHookSolenoid = 0; //PLACEHOLDER, NEEDS TO REPLACED WITH PROPER VALUE
+        public final static int kExtendSolenoid = 0; //PLACEHOLDER, NEEDS TO REPLACED WITH PROPER VALUE
     }
 
     public final static class ControllerConstants {
