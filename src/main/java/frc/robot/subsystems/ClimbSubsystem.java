@@ -27,7 +27,21 @@ public class ClimbSubsystem extends SubsystemBase {
     m_backward.setInverted(true);
   }
 
-  
+  /**
+   * Moves the vertical component of the climb upwards
+   * @param speed - The speed to set the motors to
+   */
+  public void moveUp(double speed) {
+    m_forward.set(speed);
+  }
+
+  /**
+   * Moves the vertical component of the climb downwards
+   * @param speed - The speed to set the motors to
+   */
+  public void moveDown(double speed) {
+    m_forward.set(-speed);
+  }
 
   @Override
   public void periodic() {
