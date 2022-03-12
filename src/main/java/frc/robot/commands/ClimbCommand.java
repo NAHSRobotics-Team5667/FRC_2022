@@ -33,9 +33,9 @@ public class ClimbCommand extends CommandBase {
 
     //Moves the vertical climb depending on the dpad button pressed
     if (RobotContainer.getController().getDPad() == 0) {
-      m_climbSubsystem.setVerticalSpeed(0.5);
+      m_climbSubsystem.setVerticalSpeed(0.2);
     } else if (RobotContainer.getController().getDPad() == 180) {
-      m_climbSubsystem.setVerticalSpeed(-0.5);
+      m_climbSubsystem.setVerticalSpeed(-0.2);
     } else {
       m_climbSubsystem.setVerticalSpeed(0.0);
     }
@@ -43,10 +43,10 @@ public class ClimbCommand extends CommandBase {
     //Moves the diagonal climb depending on the dpad button pressed
     if (RobotContainer.getController().getDPad() == 90) {
       //Extend
-      m_climbSubsystem.setDiagonalSpeed(0.5);
+      m_climbSubsystem.setDiagonalSpeed(0.2);
     } else if (RobotContainer.getController().getDPad() == 270) {
       //Retract
-      m_climbSubsystem.setDiagonalSpeed(-0.5);
+      m_climbSubsystem.setDiagonalSpeed(-0.2);
     } else {
       m_climbSubsystem.setDiagonalSpeed(0.0);
     }

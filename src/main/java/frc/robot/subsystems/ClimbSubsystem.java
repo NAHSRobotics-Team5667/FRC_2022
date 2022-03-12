@@ -102,7 +102,7 @@ public class ClimbSubsystem extends SubsystemBase {
    */
   public void setVerticalSpeed(double speed) {
     m_leftVertical.set(speed);
-    m_rightVertical.set(speed);
+    m_rightVertical.set(-speed);
   }
 
   /**
@@ -112,7 +112,7 @@ public class ClimbSubsystem extends SubsystemBase {
    */
   public void setDiagonalSpeed(double speed) {
     m_leftDiagonal.set(speed);
-    m_rightDiagonal.set(speed);
+    m_rightDiagonal.set(-speed);
   }
 
   @Override
