@@ -95,6 +95,26 @@ public class ClimbSubsystem extends SubsystemBase {
     }
   }
 
+  /**
+   * Sets vertical speed. Should be called to move the vertical climb manually.
+   * 
+   * @param speed - The speed to set the vertical climb to.
+   */
+  public void setVerticalSpeed(double speed) {
+    m_leftVertical.set(speed);
+    m_rightVertical.set(speed);
+  }
+
+  /**
+   * Sets diagonal speed. Should be called to move the diagonal climb manually.
+   * 
+   * @param speed - The speed to set the diagonal climb to.
+   */
+  public void setDiagonalSpeed(double speed) {
+    m_leftDiagonal.set(speed);
+    m_rightDiagonal.set(speed);
+  }
+
   @Override
   public void periodic() {
     verticalPositions[0] = m_leftVertical.getSelectedSensorPosition();
