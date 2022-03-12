@@ -16,10 +16,10 @@ import edu.wpi.first.math.util.Units;
  */
 public final class Constants {
     public static final class DriveConstants {
-        public final static int kFrontLeftId = -1;
-        public final static int kFrontRightId = -1;
-        public final static int kBackLeftId = -1;
-        public final static int kBackRightId = -1;
+        public final static int kFrontLeftId = -1; // TODO: placeholder
+        public final static int kFrontRightId = -1; // TODO: placeholder
+        public final static int kBackLeftId = -1; // TODO: placeholder
+        public final static int kBackRightId = -1; // TODO: placeholder
         
         public final static double kGearRatio = 8 / 62;
         public final static double kWheelDiameter = Units.inchesToMeters(4);
@@ -27,16 +27,24 @@ public final class Constants {
 
     public static final class IndexConstants {
         public final static int kSpinnyMotorId = 2;
-        public final static double kGearRatio = -1;
-        public final static int kSolenoidOfIntake = -1;
+        public final static double kGearRatio = -1; // TODO: placeholder
+        public final static int kSolenoidOfIntake = -1; // TODO: placeholder
         
     }
 
     public static final class ClimbConstants {
-        public final static int kForwardMotor = 0; //PLACEHOLDER, NEEDS TO REPLACED WITH PROPER VALUE
-        public final static int kBackwardMotor = 0; //PLACEHOLDER, NEEDS TO REPLACED WITH PROPER VALUE
-        public final static int kHookSolenoid = 0; //PLACEHOLDER, NEEDS TO REPLACED WITH PROPER VALUE
-        public final static int kExtendSolenoid = 0; //PLACEHOLDER, NEEDS TO REPLACED WITH PROPER VALUE
+        public final static int kLeftVerticalId = -1; // TODO: placeholder
+        public final static int kRightVerticalId = -1; // TODO: placeholder
+        public final static int kLeftDiagonalId = -1; // TODO: placeholder
+        public final static int kRightDiagonalId = -1; // TODO: placeholder
+
+        public final static double kPVertical = 0.01; // TODO: tweak with experimentation
+        public final static double kIVertical = 0; // TODO: tweak with experimentation
+        public final static double kDVertical = 0; // TODO: tweak with experimentation
+
+        public final static double kPDiagonal = 0.01; // TODO: tweak with experimentation
+        public final static double kIDiagonal = 0; // TODO: tweak with experimentation
+        public final static double kDDiagonal = 0; // TODO: tweak with experimentation
     }
 
     public final static class ControllerConstants {
