@@ -12,7 +12,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -20,12 +19,11 @@ import frc.robot.Constants.ClimbConstants;
 
 public class ClimbSubsystem extends SubsystemBase {
   private WPI_TalonFX m_leftVertical, m_rightVertical, m_leftDiagonal, m_rightDiagonal;
-  private Solenoid m_hook, m_extend;
 
   private PIDController m_rightVerticalController, m_leftVerticalController, m_rightDiagonalController, m_leftDiagonalController;
 
   private double[] verticalPositions = new double[1];
-  private double[] diagonalPositions = new double [1];
+  private double[] diagonalPositions = new double[1];
   
   /** Creates a new ClimbSubsystem. */
   public ClimbSubsystem() {
