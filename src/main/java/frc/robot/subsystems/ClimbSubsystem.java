@@ -4,11 +4,30 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class ClimbSubsystem extends SubsystemBase {
+  private WPI_TalonFX m_forward, m_backward;
+  
   /** Creates a new ClimbSubsystem. */
-  public ClimbSubsystem() {}
+  public ClimbSubsystem() {
+    m_forward = new WPI_TalonFX(Constants.ClimbConstants.kForwardMotorId);
+    m_backward = new WPI_TalonFX(Constants.ClimbConstants.kBackwardMotorId);
+
+    m_forward.setNeutralMode(NeutralMode.Brake);
+    m_backward.setNeutralMode(NeutralMode.Brake);
+
+    m_backward.follow(m_forward);
+    m_backward.setInverted(true);
+  }
+
+  
 
   @Override
   public void periodic() {
