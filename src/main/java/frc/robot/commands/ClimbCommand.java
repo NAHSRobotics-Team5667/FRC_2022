@@ -5,24 +5,65 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.ClimbSubsystem;
 
 public class ClimbCommand extends CommandBase {
-  /** Creates a new ClimbCommand. */
-  public ClimbCommand() {
-    // Use addRequirements() here to declare subsystem dependencies.
+  ClimbSubsystem m_climbSubsystem;
+  
+  /** Creates a new ClimbCommand. 
+   * 
+   *  @param subsystem - The subsystem to be used by this command.
+  */
+  public ClimbCommand(ClimbSubsystem subsystem) {
+    m_climbSubsystem = subsystem;
+    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_climbSubsystem.setVerticalSpeed(0.0);
+    m_climbSubsystem.setDiagonalSpeed(0.0);
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+
+    //Moves the vertical climb depending on the dpad button pressed
+    if (RobotContainer.getController().getDPad() == 0) {
+      m_climbSubsystem.setVerticalSpeed(0.5);
+    } else if (RobotContainer.getController().getDPad() == 180) {
+      m_climbSubsystem.setVerticalSpeed(-0.5);
+    } else {
+      m_climbSubsystem.setVerticalSpeed(0.0);
+    }
+
+    //Moves the diagonal climb depending on the dpad button pressed
+    if (RobotContainer.getController().getDPad() == 90) {
+      //Extend
+      m_climbSubsystem.setDiagonalSpeed(0.5);
+    } else if (RobotContainer.getController().getDPad() == 270) {
+      //Retract
+      m_climbSubsystem.setDiagonalSpeed(-0.5);
+    } else {
+      m_climbSubsystem.setDiagonalSpeed(0.0);
+    }
+
+    //Releases the vertical climb when X is pressed
+    if (RobotContainer.getController().getXButton()) {
+      m_climbSubsystem.setVerticalPosition(0.0);
+    }
+
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    m_climbSubsystem.setVerticalSpeed(0.0);
+    m_climbSubsystem.setDiagonalSpeed(0.0);
+  }
 
   // Returns true when the command should end.
   @Override
