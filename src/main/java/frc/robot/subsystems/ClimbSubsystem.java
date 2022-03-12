@@ -48,6 +48,27 @@ public class ClimbSubsystem extends SubsystemBase {
     m_forward.set(-speed);
   }
 
+  /**
+   * Releases the hook of the climb
+   */
+  public void releaseHook() {
+    m_hook.set(false);
+  }
+
+  /**
+   * Extends the horizontal component of the climb
+   */
+  public void extend() {
+    m_extend.set(true);
+  }
+
+  /**
+   * Retracts the horizontal component of the climb
+   */
+  public void retract() {
+    m_extend.set(false);
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
