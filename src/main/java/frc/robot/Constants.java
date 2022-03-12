@@ -15,6 +15,10 @@ import edu.wpi.first.math.util.Units;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    public static final class IntakeConstants{
+        public static final int kIntakeId = -1;
+        public static final int kPistonId = -2;
+    }
     public static final class DriveConstants {
         public final static int kFrontLeftId = -1;
         public final static int kFrontRightId = -1;
@@ -24,15 +28,12 @@ public final class Constants {
         public final static double kGearRatio = 8 / 62;
         public final static double kWheelDiameter = Units.inchesToMeters(4);
     }
-
     public static final class IndexConstants {
         public final static int kSpinnyMotorId = 2;
         public final static double kGearRatio = -1;
         public final static int kSolenoidOfIntake = -1;
         
     }
-
-
     public final static class ControllerConstants {
         public static final int CONTROLLER_PORT = 0; // Controller port
 
@@ -64,4 +65,3 @@ public final class Constants {
         public static final int BUTTON_START_PORT = 7; // Start button
     }
 }
-   
