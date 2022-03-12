@@ -9,16 +9,21 @@ import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ClimbSubsystem extends SubsystemBase {
   private WPI_TalonFX m_forward, m_backward;
+  private Solenoid m_hook, m_extend;
   
   /** Creates a new ClimbSubsystem. */
   public ClimbSubsystem() {
-    m_forward = new WPI_TalonFX(Constants.ClimbConstants.kForwardMotorId);
-    m_backward = new WPI_TalonFX(Constants.ClimbConstants.kBackwardMotorId);
+    m_forward = new WPI_TalonFX(Constants.ClimbConstants.kForwardMotor);
+    m_backward = new WPI_TalonFX(Constants.ClimbConstants.kBackwardMotor);
+    //NEED TO ADD SOLENOID MODULE TYPE
+    m_hook = new Solenoid(moduleType, Constants.ClimbConstants.kHookSolenoid);
+    m_extend = new Solenoid(moduleType, Constants.ClimbConstants.kExtendSolenoid);
 
     m_forward.setNeutralMode(NeutralMode.Brake);
     m_backward.setNeutralMode(NeutralMode.Brake);
