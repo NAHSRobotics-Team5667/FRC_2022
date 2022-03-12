@@ -13,6 +13,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.ClimbConstants;
@@ -102,5 +103,8 @@ public class ClimbSubsystem extends SubsystemBase {
     verticalPositions[1] = -m_rightVertical.getSelectedSensorPosition();
     diagonalPositions[0] = m_leftDiagonal.getSelectedSensorPosition();
     diagonalPositions[1] = -m_rightDiagonal.getSelectedSensorPosition();
+    SmartDashboard.putNumber("diagonal height", getDiagonalPositionInches());
+    SmartDashboard.putNumber("vertical height", getVerticalPositionInches());
+
   }
 }

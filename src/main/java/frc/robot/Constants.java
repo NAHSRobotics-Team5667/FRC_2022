@@ -28,12 +28,19 @@ public final class Constants {
         public final static double kGearRatio = 8 / 62;
         public final static double kWheelDiameter = Units.inchesToMeters(4);
     }
+    public static final class ShooterConstants {
+        public final static int kHoodMotor = -1;
+        public final static int kShooterMotor =-1;
+            
+        }
+    
     public static final class IndexConstants {
         public final static int kSpinnyMotorId = 2;
         public final static double kGearRatio = -1; // TODO: placeholder
         public final static int kSolenoidOfIntake = -1; // TODO: placeholder
         
     }
+
 
     public static final class ClimbConstants {
         public final static int kLeftVerticalId = -1; // TODO: placeholder
@@ -81,3 +88,4 @@ public final class Constants {
         public static final int BUTTON_START_PORT = 7; // Start button
     }
 }
+   
