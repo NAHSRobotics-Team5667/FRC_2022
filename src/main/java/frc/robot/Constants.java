@@ -32,6 +32,10 @@ public final class Constants {
         
     }
 
+    public static final class ClimbConstants {
+        public final static int kForwardMotorId = 0; //PLACEHOLDER, NEEDS TO REPLACED WITH PROPER VALUE
+        public final static int kBackwardMotorId = 0; //PLACEHOLDER, NEEDS TO REPLACED WITH PROPER VALUE
+    }
 
     public final static class ControllerConstants {
         public static final int CONTROLLER_PORT = 0; // Controller port
