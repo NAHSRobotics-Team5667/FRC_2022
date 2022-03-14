@@ -55,6 +55,8 @@ public final class Constants {
         public final static double kPDiagonal = 0.01; // TODO: tweak with experimentation
         public final static double kIDiagonal = 0; // TODO: tweak with experimentation
         public final static double kDDiagonal = 0; // TODO: tweak with experimentation
+
+        public final static double kMaxVerticalHeight = 0; // TODO: add max height in inches
     }
 
     public final static class ControllerConstants {
