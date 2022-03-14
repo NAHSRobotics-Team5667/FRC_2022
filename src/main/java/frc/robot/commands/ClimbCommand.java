@@ -24,7 +24,7 @@ public class ClimbCommand extends CommandBase {
   @Override
   public void initialize() {
     m_climbSubsystem.setVerticalSpeed(0.0);
-    m_climbSubsystem.setDiagonalSpeed(0.0);
+    //m_climbSubsystem.setDiagonalSpeed(0.0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -41,7 +41,7 @@ public class ClimbCommand extends CommandBase {
     }
 
     //Moves the diagonal climb depending on the dpad button pressed
-    if (RobotContainer.getController().getDPad() == 90) {
+    /*if (RobotContainer.getController().getDPad() == 90) {
       //Extend
       m_climbSubsystem.setDiagonalSpeed(0.2);
     } else if (RobotContainer.getController().getDPad() == 270) {
@@ -49,7 +49,7 @@ public class ClimbCommand extends CommandBase {
       m_climbSubsystem.setDiagonalSpeed(-0.2);
     } else {
       m_climbSubsystem.setDiagonalSpeed(0.0);
-    }
+    }*/
 
     //Releases the vertical climb when X is pressed
     if (RobotContainer.getController().getXButton()) {
@@ -62,7 +62,7 @@ public class ClimbCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_climbSubsystem.setVerticalSpeed(0.0);
-    m_climbSubsystem.setDiagonalSpeed(0.0);
+    //m_climbSubsystem.setDiagonalSpeed(0.0);
   }
 
   // Returns true when the command should end.

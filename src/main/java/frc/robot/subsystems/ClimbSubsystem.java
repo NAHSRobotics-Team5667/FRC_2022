@@ -23,24 +23,24 @@ public class ClimbSubsystem extends SubsystemBase {
   private PIDController m_rightVerticalController, m_leftVerticalController, m_rightDiagonalController, m_leftDiagonalController;
 
   private double[] verticalPositions = new double[1];
-  private double[] diagonalPositions = new double[1];
+  //private double[] diagonalPositions = new double[1];
   
   /** Creates a new ClimbSubsystem. */
   public ClimbSubsystem() {
     m_leftVertical = new WPI_TalonFX(Constants.ClimbConstants.kLeftVerticalId);
     m_rightVertical = new WPI_TalonFX(Constants.ClimbConstants.kRightVerticalId);
-    m_leftDiagonal = new WPI_TalonFX(Constants.ClimbConstants.kLeftDiagonalId);
-    m_rightDiagonal = new WPI_TalonFX(Constants.ClimbConstants.kRightDiagonalId);
+    //m_leftDiagonal = new WPI_TalonFX(Constants.ClimbConstants.kLeftDiagonalId);
+    //m_rightDiagonal = new WPI_TalonFX(Constants.ClimbConstants.kRightDiagonalId);
 
     m_leftVertical.setNeutralMode(NeutralMode.Brake);
     m_rightVertical.setNeutralMode(NeutralMode.Brake);
-    m_leftDiagonal.setNeutralMode(NeutralMode.Brake);
-    m_rightDiagonal.setNeutralMode(NeutralMode.Brake);
+    //m_leftDiagonal.setNeutralMode(NeutralMode.Brake);
+    //m_rightDiagonal.setNeutralMode(NeutralMode.Brake);
 
     m_leftVerticalController = new PIDController(ClimbConstants.kPVertical, ClimbConstants.kIVertical, ClimbConstants.kDVertical);
     m_rightVerticalController = new PIDController(ClimbConstants.kPVertical, ClimbConstants.kIVertical, ClimbConstants.kDVertical);
-    m_leftDiagonalController = new PIDController(ClimbConstants.kPDiagonal, ClimbConstants.kIDiagonal, ClimbConstants.kDDiagonal);
-    m_rightDiagonalController = new PIDController(ClimbConstants.kPDiagonal, ClimbConstants.kIDiagonal, ClimbConstants.kDDiagonal);
+    //m_leftDiagonalController = new PIDController(ClimbConstants.kPDiagonal, ClimbConstants.kIDiagonal, ClimbConstants.kDDiagonal);
+    //m_rightDiagonalController = new PIDController(ClimbConstants.kPDiagonal, ClimbConstants.kIDiagonal, ClimbConstants.kDDiagonal);
   }
 
   private double ticksToInches(double ticks) {
@@ -65,9 +65,9 @@ public class ClimbSubsystem extends SubsystemBase {
    * 
    * @return the extension of the diagonal climb in inches.
    */
-  public double getDiagonalPositionInches() {
+  /*public double getDiagonalPositionInches() {
     return ticksToInches((diagonalPositions[0] + diagonalPositions[1]) / 2);
-  }
+  }*/
 
   /**
    * Sets vertical position. Should be called periodically.
@@ -87,13 +87,13 @@ public class ClimbSubsystem extends SubsystemBase {
    * 
    * @param inches target inches of extension.
    */
-  public void setDiagonalPosition(double inches) {
+  /*public void setDiagonalPosition(double inches) {
     double target = inchesToTicks(inches);
     if (!m_leftDiagonalController.atSetpoint() && !m_rightDiagonalController.atSetpoint()) {
       m_leftDiagonal.set(ControlMode.PercentOutput, m_leftDiagonalController.calculate(diagonalPositions[0], target));
       m_rightDiagonal.set(ControlMode.PercentOutput, m_rightDiagonalController.calculate(diagonalPositions[1], target));
     }
-  }
+  }*/
 
   /**
    * Sets vertical speed. Should be called to move the vertical climb manually.
@@ -110,18 +110,18 @@ public class ClimbSubsystem extends SubsystemBase {
    * 
    * @param speed - The speed to set the diagonal climb to.
    */
-  public void setDiagonalSpeed(double speed) {
+  /*public void setDiagonalSpeed(double speed) {
     m_leftDiagonal.set(speed);
     m_rightDiagonal.set(-speed);
-  }
+  }*/
 
   @Override
   public void periodic() {
     verticalPositions[0] = m_leftVertical.getSelectedSensorPosition();
     verticalPositions[1] = -m_rightVertical.getSelectedSensorPosition();
-    diagonalPositions[0] = m_leftDiagonal.getSelectedSensorPosition();
-    diagonalPositions[1] = -m_rightDiagonal.getSelectedSensorPosition();
-    SmartDashboard.putNumber("diagonal height", getDiagonalPositionInches());
+    //diagonalPositions[0] = m_leftDiagonal.getSelectedSensorPosition();
+    //diagonalPositions[1] = -m_rightDiagonal.getSelectedSensorPosition();
+    //SmartDashboard.putNumber("diagonal height", getDiagonalPositionInches());
     SmartDashboard.putNumber("vertical height", getVerticalPositionInches());
 
   }
