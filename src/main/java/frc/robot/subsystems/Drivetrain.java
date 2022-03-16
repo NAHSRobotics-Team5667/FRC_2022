@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
@@ -11,9 +12,9 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -22,7 +23,7 @@ public class Drivetrain extends SubsystemBase {
   private WPI_TalonFX m_fL, m_fR, m_rL, m_rR;
   private AHRS m_gyro;
 
-  private double[] odometryValues = new double[3];
+  private double[] odometryValues = new double[4];
 
   private DifferentialDrive m_drive;
   private DifferentialDriveOdometry m_odometry;
@@ -38,6 +39,9 @@ public class Drivetrain extends SubsystemBase {
     m_fR.setNeutralMode(NeutralMode.Brake);
     m_rL.setNeutralMode(NeutralMode.Brake);
     m_rR.setNeutralMode(NeutralMode.Brake);
+
+    m_fR.setInverted(true);
+    m_rR.setInverted(true);
 
     m_rL.follow(m_fL);
     m_rR.follow(m_fR);
@@ -93,6 +97,11 @@ public class Drivetrain extends SubsystemBase {
     m_drive.arcadeDrive(xSpeed, zRotation);
   }
 
+  public void stopMotors() {
+    m_fL.set(0);
+    m_fR.set(0);
+  }
+
   /**
    * Converts falcon drivetrain ticks to meters driven.
    * 
@@ -112,6 +121,24 @@ public class Drivetrain extends SubsystemBase {
     return m_odometry.getPoseMeters();
   }
 
+  public void resetOdometry(Pose2d pose) {
+    m_odometry.resetPosition(pose, pose.getRotation());
+  }
+
+  public void resetEncoders() {
+    m_fL.setSelectedSensorPosition(0);
+    m_fR.setSelectedSensorPosition(0);
+    m_rL.setSelectedSensorPosition(0);
+    m_rR.setSelectedSensorPosition(0);
+  }
+
+  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+    return new DifferentialDriveWheelSpeeds(
+      falconTicksToMeters((m_fL.getSelectedSensorVelocity() + m_rL.getSelectedSensorVelocity()) / 2),
+      falconTicksToMeters((m_fR.getSelectedSensorVelocity() + m_rR.getSelectedSensorVelocity()) / 2)
+    );
+  }
+
   @Override
   public void periodic() {
     updateEncoderValues();
@@ -120,5 +147,13 @@ public class Drivetrain extends SubsystemBase {
       falconTicksToMeters((odometryValues[0] + odometryValues[2]) / 2), 
       falconTicksToMeters((odometryValues[1] + odometryValues[3]) / 2)
     );
+
+    m_rR.set(ControlMode.PercentOutput, m_fR.get());
+    m_rL.set(ControlMode.PercentOutput, m_fL.get());
+
+    SmartDashboard.putNumber("FL Speed", m_fL.get());
+    SmartDashboard.putNumber("FR Speed", m_fR.get());
+    SmartDashboard.putNumber("BL Speed", m_rL.get());
+    SmartDashboard.putNumber("BR Speed", m_rR.get());
   }
 }

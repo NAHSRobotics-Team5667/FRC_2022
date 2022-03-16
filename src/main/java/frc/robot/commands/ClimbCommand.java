@@ -34,9 +34,9 @@ public class ClimbCommand extends CommandBase {
 
     //Moves the vertical climb depending on the dpad button pressed
     if (RobotContainer.getController().getDPad() == 0) {
-      m_climbSubsystem.setVerticalSpeed(0.2);
+      m_climbSubsystem.setVerticalSpeed(0.4);
     } else if (RobotContainer.getController().getDPad() == 180) {
-      m_climbSubsystem.setVerticalSpeed(-0.2);
+      m_climbSubsystem.setVerticalSpeed(-0.4);
     } else {
       m_climbSubsystem.setVerticalSpeed(0.0);
     }
@@ -53,9 +53,15 @@ public class ClimbCommand extends CommandBase {
     }*/
 
     //Releases the vertical climb when X is pressed
+<<<<<<< Updated upstream
     if (RobotContainer.getController().getXButton()) {
       m_climbSubsystem.setVerticalPosition(Constants.ClimbConstants.kMaxVerticalHeight);
     }
+=======
+    // if (RobotContainer.getController().getXButton()) {
+    //   m_climbSubsystem.setVerticalPosition(0.0);
+    // }
+>>>>>>> Stashed changes
 
   }
 

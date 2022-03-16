@@ -23,7 +23,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   /** Creates a new ShooterSubsystem. */
   public ShooterSubsystem() {
-    shootingMotor = new WPI_TalonFX(Constants.ShooterConstants.kShooterMotor);
+    shootingMotor = new WPI_TalonFX(Constants.ShooterConstants.kShooterMotorL);
     hoodMotor = new WPI_TalonFX(Constants.ShooterConstants.kHoodMotor);
   }
   public void shootingSpeed(double speed){
@@ -62,12 +62,9 @@ public class ShooterSubsystem extends SubsystemBase {
     double y = ty.getDouble(0.0);
     double area = ta.getDouble(0.0);
 
-
-//post to smart dashboard periodically
+    //post to smart dashboard periodically
     SmartDashboard.putNumber("LimelightX", x);
     SmartDashboard.putNumber("LimelightY", y);
     SmartDashboard.putNumber("LimelightArea", area);
-        
-    // This method will be called once per scheduler run
   }
 }

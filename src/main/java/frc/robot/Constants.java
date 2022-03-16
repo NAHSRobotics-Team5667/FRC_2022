@@ -4,6 +4,11 @@
 
 package frc.robot;
 
+import java.nio.file.Paths;
+
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.math.util.Units;
 
 /**
@@ -13,38 +18,63 @@ import edu.wpi.first.math.util.Units;
  *
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
+ * 
+ * 
  */
 public final class Constants {
     public static final class IntakeConstants{
-        public static final int kIntakeId = -1;
-        public static final int kPistonId = -2;
+        public static final int kIntakeId = 4;
+        public static final int kPistonId = -2; // TODO: placeholder
     }
+
     public static final class DriveConstants {
-        public final static int kFrontLeftId = -1; // TODO: placeholder
-        public final static int kFrontRightId = -1; // TODO: placeholder
-        public final static int kBackLeftId = -1; // TODO: placeholder
-        public final static int kBackRightId = -1; // TODO: placeholder
+        public final static int kFrontLeftId = 0;
+        public final static int kFrontRightId = 2;
+        public final static int kBackLeftId = 8;
+        public final static int kBackRightId = 9;
         
         public final static double kGearRatio = 8 / 62;
         public final static double kWheelDiameter = Units.inchesToMeters(4);
+
+        public final static double kRamseteB = -1; // TODO: placeholder
+        public final static double kRamseteZeta = -1; // TODO: placeholder
+        public final static double ksVolts = -1; // TODO: placeholder
+        public final static double kvVoltSecondsPerMeter = -1; // TODO: placeholder
+        public final static double kaVoltSecondsSquaredPerMeter = -1; // TODO: placeholder
+
+        public final static double kTrackWidthMeters = -1;
+        public final static DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackWidthMeters);
+        public static  final double kPDriveVel = -1;
     }
-    public static final class ShooterConstants {
-        public final static int kHoodMotor = -1;
-        public final static int kShooterMotor =-1;
-            
+
+    public static final class PathWeaver {
+        public static Trajectory getTrajectory(String path) {
+            try {
+                return TrajectoryUtil
+                        .fromPathweaverJson(Paths.get("/home/lvuser/deploy/output/" + path + ".wpilib.json"));
+            } catch (Exception e) {
+                System.out.println("CANNOT READ Trajectory - " + path);
+                System.out.println("WITH ERROR: " + e.toString());
+                return null;
+            }
         }
+    }
+
+    public static final class ShooterConstants {
+        public final static int kHoodMotor = 5;
+        public final static int kShooterMotorR = 7;
+        public final static int kShooterMotorL = 6;
+    }
     
     public static final class IndexConstants {
-        public final static int kSpinnyMotorId = 2;
+        public final static int kSpinnyMotorId = -1; // TODO: placeholder
         public final static double kGearRatio = -1; // TODO: placeholder
-        public final static int kSolenoidOfIntake = -1; // TODO: placeholder
-        
+        public final static int kSolenoidOfIntake = -1; // TODO: placeholder   
     }
 
-
     public static final class ClimbConstants {
-        public final static int kLeftVerticalId = -1; // TODO: placeholder
-        public final static int kRightVerticalId = -1; // TODO: placeholder
+        public final static int kLeftVerticalId = 1;
+        public final static int kRightVerticalId = 3;
         public final static int kLeftDiagonalId = -1; // TODO: placeholder
         public final static int kRightDiagonalId = -1; // TODO: placeholder
 

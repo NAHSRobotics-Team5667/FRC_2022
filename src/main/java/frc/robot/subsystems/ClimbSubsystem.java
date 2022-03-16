@@ -22,7 +22,7 @@ public class ClimbSubsystem extends SubsystemBase {
 
   private PIDController m_rightVerticalController, m_leftVerticalController, m_rightDiagonalController, m_leftDiagonalController;
 
-  private double[] verticalPositions = new double[1];
+  private double[] verticalPositions = new double[2];
   //private double[] diagonalPositions = new double[1];
   
   /** Creates a new ClimbSubsystem. */
@@ -36,6 +36,8 @@ public class ClimbSubsystem extends SubsystemBase {
     m_rightVertical.setNeutralMode(NeutralMode.Brake);
     //m_leftDiagonal.setNeutralMode(NeutralMode.Brake);
     //m_rightDiagonal.setNeutralMode(NeutralMode.Brake);
+
+    m_rightVertical.setInverted(true);
 
     m_leftVerticalController = new PIDController(ClimbConstants.kPVertical, ClimbConstants.kIVertical, ClimbConstants.kDVertical);
     m_rightVerticalController = new PIDController(ClimbConstants.kPVertical, ClimbConstants.kIVertical, ClimbConstants.kDVertical);
