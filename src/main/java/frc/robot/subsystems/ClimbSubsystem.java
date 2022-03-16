@@ -104,7 +104,7 @@ public class ClimbSubsystem extends SubsystemBase {
    */
   public void setVerticalSpeed(double speed) {
     m_leftVertical.set(speed);
-    m_rightVertical.set(-speed);
+    m_rightVertical.set(speed);
   }
 
   /**
