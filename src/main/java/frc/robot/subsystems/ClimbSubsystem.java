@@ -37,7 +37,7 @@ public class ClimbSubsystem extends SubsystemBase {
     //m_leftDiagonal.setNeutralMode(NeutralMode.Brake);
     //m_rightDiagonal.setNeutralMode(NeutralMode.Brake);
 
-    m_rightVertical.setInverted(true);
+    m_leftVertical.setInverted(true);
 
     m_leftVerticalController = new PIDController(ClimbConstants.kPVertical, ClimbConstants.kIVertical, ClimbConstants.kDVertical);
     m_rightVerticalController = new PIDController(ClimbConstants.kPVertical, ClimbConstants.kIVertical, ClimbConstants.kDVertical);
@@ -125,6 +125,5 @@ public class ClimbSubsystem extends SubsystemBase {
     //diagonalPositions[1] = -m_rightDiagonal.getSelectedSensorPosition();
     //SmartDashboard.putNumber("diagonal height", getDiagonalPositionInches());
     SmartDashboard.putNumber("vertical height", getVerticalPositionInches());
-
   }
 }

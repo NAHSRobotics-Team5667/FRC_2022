@@ -72,6 +72,13 @@ public class Drivetrain extends SubsystemBase {
     m_fR.setVoltage(-right);
   }
 
+  public void setDrivetrainSpeed(double left, double right) {
+    m_fL.set(left);
+    m_fR.set(right);
+    m_rL.set(left);
+    m_rR.set(right);
+  }
+
   /**
    * Updates encoder values.
    * 
@@ -82,9 +89,9 @@ public class Drivetrain extends SubsystemBase {
    */
   private void updateEncoderValues() {
     odometryValues[0] = m_fL.getSelectedSensorPosition();
-    odometryValues[1] = -m_fR.getSelectedSensorPosition();
+    odometryValues[1] = m_fR.getSelectedSensorPosition();
     odometryValues[2] = m_rL.getSelectedSensorPosition();
-    odometryValues[3] = -m_rR.getSelectedSensorPosition();
+    odometryValues[3] = m_rR.getSelectedSensorPosition();
   }
 
   /**
@@ -155,5 +162,8 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("FR Speed", m_fR.get());
     SmartDashboard.putNumber("BL Speed", m_rL.get());
     SmartDashboard.putNumber("BR Speed", m_rR.get());
+
+    SmartDashboard.putNumber("Left Encoder", odometryValues[0]);
+    SmartDashboard.putNumber("Right Encoder", odometryValues[1]);
   }
 }

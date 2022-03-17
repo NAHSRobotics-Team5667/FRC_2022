@@ -12,6 +12,7 @@ import frc.robot.subsystems.Drivetrain;
 
 public class DrivetrainCommand extends CommandBase {
   private Drivetrain m_drive;
+  public boolean slowmode = false;
   
   /** Creates a new DrivetrainCommand. */
   public DrivetrainCommand(Drivetrain m_drive) {
@@ -30,7 +31,19 @@ public class DrivetrainCommand extends CommandBase {
   @Override
   public void execute() {
     Map<String, Double> sticks = RobotContainer.getController().getSticks();
-    m_drive.arcadeDrive(sticks.get("LSY"), sticks.get("RSX"));
+    if (slowmode) {
+      m_drive.arcadeDrive(0.5 * sticks.get("LSY"), 0.5 * sticks.get("RSX"));
+    } else {
+      m_drive.arcadeDrive(sticks.get("LSY"), sticks.get("RSX"));
+    }
+
+    if (RobotContainer.getController().getLeftStickButtonPressed()) slowmode = !slowmode;
+
+    if (RobotContainer.getController().getAButtonPressed()) {
+      m_drive.resetEncoders();
+    } else if (RobotContainer.getController().getBButtonPressed()) {
+      m_drive.resetGyro();
+    }
   }
 
   // Called once the command ends or is interrupted.

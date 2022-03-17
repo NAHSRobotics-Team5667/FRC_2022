@@ -53,16 +53,9 @@ public class ClimbCommand extends CommandBase {
     }*/
 
     //Releases the vertical climb when X is pressed
-<<<<<<< Updated upstream
-    if (RobotContainer.getController().getXButton()) {
-      m_climbSubsystem.setVerticalPosition(Constants.ClimbConstants.kMaxVerticalHeight);
-    }
-=======
     // if (RobotContainer.getController().getXButton()) {
-    //   m_climbSubsystem.setVerticalPosition(0.0);
+    //   m_climbSubsystem.setVerticalPosition(Constants.ClimbConstants.kMaxVerticalHeight);
     // }
->>>>>>> Stashed changes
-
   }
 
   // Called once the command ends or is interrupted.
