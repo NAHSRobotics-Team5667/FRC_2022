@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -18,6 +19,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.utils.PIDMotor;
 
 public class Drivetrain extends SubsystemBase {
   private WPI_TalonFX m_fL, m_fR, m_rL, m_rR;
@@ -28,6 +30,9 @@ public class Drivetrain extends SubsystemBase {
   private DifferentialDrive m_drive;
   private DifferentialDriveOdometry m_odometry;
 
+  private PIDController leftSpeedController = new PIDController(0.01, 0, 0);
+  private PIDController rightSpeedController = new PIDController(0.01, 0, 0);
+
   /** Creates a new Drivetrain. */
   public Drivetrain() {
     m_fL = new WPI_TalonFX(Constants.DriveConstants.kFrontLeftId);
@@ -35,10 +40,10 @@ public class Drivetrain extends SubsystemBase {
     m_rL = new WPI_TalonFX(Constants.DriveConstants.kBackLeftId);
     m_rR = new WPI_TalonFX(Constants.DriveConstants.kBackRightId);
 
-    m_fL.setNeutralMode(NeutralMode.Brake);
-    m_fR.setNeutralMode(NeutralMode.Brake);
-    m_rL.setNeutralMode(NeutralMode.Brake);
-    m_rR.setNeutralMode(NeutralMode.Brake);
+    m_fL.setNeutralMode(NeutralMode.Coast);
+    m_fR.setNeutralMode(NeutralMode.Coast);
+    m_rL.setNeutralMode(NeutralMode.Coast);
+    m_rR.setNeutralMode(NeutralMode.Coast);
 
     m_fR.setInverted(true);
     m_rR.setInverted(true);
@@ -52,13 +57,17 @@ public class Drivetrain extends SubsystemBase {
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
   }
 
+  public void feed() {
+    m_drive.feed();
+  }
+
   /**
    * Gets the angle of the drivetrain in degrees.
    * 
    * @return angle of the robot in degrees.
    */
   public double getAngle() {
-    return -m_gyro.getAngle();
+    return m_gyro.getAngle();
   }
 
   public void resetGyro() {
@@ -101,7 +110,7 @@ public class Drivetrain extends SubsystemBase {
    * @param zRotation rotation
    */
   public void arcadeDrive(double xSpeed, double zRotation) {
-    m_drive.arcadeDrive(xSpeed, zRotation);
+    m_drive.arcadeDrive(xSpeed, zRotation, true);
   }
 
   public void stopMotors() {
@@ -165,5 +174,7 @@ public class Drivetrain extends SubsystemBase {
 
     SmartDashboard.putNumber("Left Encoder", odometryValues[0]);
     SmartDashboard.putNumber("Right Encoder", odometryValues[1]);
+
+    SmartDashboard.putNumber("Angle", getAngle());
   }
 }

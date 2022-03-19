@@ -44,7 +44,7 @@ public final class Constants {
 
         public final static double kTrackWidthMeters = -1;
         public final static DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackWidthMeters);
-        public static  final double kPDriveVel = -1;
+        public static  final double kPDriveVel = 0.02;
     }
 
     public static final class PathWeaver {

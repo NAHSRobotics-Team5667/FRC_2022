@@ -4,7 +4,9 @@
 
 package frc.robot.commands.actions;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.DriveConstants;
@@ -21,7 +23,7 @@ public class AlignCommand extends CommandBase {
   public AlignCommand(Drivetrain m_drive) {
     this.m_drive = m_drive;
 
-    angleController = new PIDController(DriveConstants.kPDriveVel, 0, 0);
+    angleController = new PIDController(DriveConstants.kPDriveVel, 0.001, 0);
 
     addRequirements(m_drive);
   }
@@ -30,21 +32,26 @@ public class AlignCommand extends CommandBase {
   @Override
   public void initialize() {
     Limelight.getInstance().turnLightOn();
-    m_drive.stopMotors();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    double output = 0;
+
     if (RobotContainer.getController().getRightBumperPressed()) alignToggle = !alignToggle;
 
     if (Limelight.getInstance().hasValidTarget() && alignToggle) {
       if (Limelight.getInstance().getXAngle() != 0) {
-        double output = angleController.calculate(Limelight.getInstance().getXAngle());
-        output = (output > 0) ? Math.max(0.3, output) : Math.min(-0.3, output);
-        m_drive.setDrivetrainSpeed(output, -output);
+        output = -angleController.calculate(Limelight.getInstance().getXAngle());
+        output = MathUtil.clamp(output, -0.3, 0.3);
+        // output = MathUtil.clamp(Limelight.getInstance().getXAngle(), -0.3, 0.3);
+        m_drive.setDrivetrainSpeed(-output, output);
+        m_drive.feed();
       }
     }
+
+    SmartDashboard.putNumber("output", output);
   }
 
   // Called once the command ends or is interrupted.
@@ -56,6 +63,6 @@ public class AlignCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return (Math.abs(Limelight.getInstance().getXAngle()) < 2);
   }
 }

@@ -32,9 +32,9 @@ public class DrivetrainCommand extends CommandBase {
   public void execute() {
     Map<String, Double> sticks = RobotContainer.getController().getSticks();
     if (slowmode) {
-      m_drive.arcadeDrive(0.5 * sticks.get("LSY"), 0.5 * sticks.get("RSX"));
+      m_drive.arcadeDrive(0.5 * sticks.get("LSY"), 0.5 * -sticks.get("RSX"));
     } else {
-      m_drive.arcadeDrive(sticks.get("LSY"), sticks.get("RSX"));
+      m_drive.arcadeDrive(0.8 * sticks.get("LSY"), 0.5 * -sticks.get("RSX"));
     }
 
     if (RobotContainer.getController().getLeftStickButtonPressed()) slowmode = !slowmode;

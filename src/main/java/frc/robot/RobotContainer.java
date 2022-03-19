@@ -6,9 +6,11 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.PS4Controller.Button;
 import frc.robot.Constants.PathWeaver;
 import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.DrivetrainCommand;
+import frc.robot.commands.actions.AlignCommand;
 import frc.robot.commands.auto.TrajectoryFollower;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.Drivetrain;
@@ -16,6 +18,7 @@ import frc.robot.subsystems.IndexSubsysytem;
 import frc.robot.utils.Controller;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -35,6 +38,7 @@ public class RobotContainer {
     m_climb = new ClimbSubsystem();
 
     m_drive.setDefaultCommand(new DrivetrainCommand(m_drive));
+    // m_drive.setDefaultCommand(new AlignCommand(m_drive));
     m_climb.setDefaultCommand(new ClimbCommand(m_climb));
 
     configureButtonBindings();
@@ -46,7 +50,11 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    JoystickButton rightBumper = new JoystickButton(getController(), Constants.ControllerConstants.BUMPER_RIGHT_PORT);
+
+    rightBumper.whenPressed(new AlignCommand(m_drive));
+  }
 
   public static Controller getController() {
     return controller;
@@ -60,6 +68,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return getAuto(0);
+    // return new AlignCommand(m_drive);
   }
 
   public SequentialCommandGroup getAuto(int index) {
