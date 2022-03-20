@@ -10,11 +10,16 @@ import edu.wpi.first.wpilibj.PS4Controller.Button;
 import frc.robot.Constants.PathWeaver;
 import frc.robot.commands.ClimbCommand;
 import frc.robot.commands.DrivetrainCommand;
+import frc.robot.commands.IndexCommand;
+import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.actions.AlignCommand;
 import frc.robot.commands.auto.TrajectoryFollower;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.IndexSubsysytem;
+import frc.robot.subsystems.IndexSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.utils.Controller;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -31,15 +36,23 @@ public class RobotContainer {
   
   private Drivetrain m_drive;
   private ClimbSubsystem m_climb;
+  private IntakeSubsystem m_intake;
+  private IndexSubsystem m_index;
+  private ShooterSubsystem m_shooter;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     m_drive = new Drivetrain();
     m_climb = new ClimbSubsystem();
+    m_intake = new IntakeSubsystem();
+    m_index = new IndexSubsystem();
+    m_shooter = new ShooterSubsystem(0);
 
     m_drive.setDefaultCommand(new DrivetrainCommand(m_drive));
-    // m_drive.setDefaultCommand(new AlignCommand(m_drive));
     m_climb.setDefaultCommand(new ClimbCommand(m_climb));
+    m_intake.setDefaultCommand(new IntakeCommand(m_intake));
+    m_index.setDefaultCommand(new IndexCommand(m_index));
+    m_shooter.setDefaultCommand(new ShooterCommand(m_shooter));
 
     configureButtonBindings();
   }

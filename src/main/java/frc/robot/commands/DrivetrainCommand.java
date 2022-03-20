@@ -6,6 +6,9 @@ package frc.robot.commands;
 
 import java.util.Map;
 
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drivetrain;
@@ -13,10 +16,17 @@ import frc.robot.subsystems.Drivetrain;
 public class DrivetrainCommand extends CommandBase {
   private Drivetrain m_drive;
   public boolean slowmode = false;
+
+  private PIDController throttleController, rotationController;
+
+  private double previousThrottle = 0;
+  private double previousRotation = 0;
   
   /** Creates a new DrivetrainCommand. */
   public DrivetrainCommand(Drivetrain m_drive) {
     this.m_drive = m_drive;
+    throttleController = new PIDController(0.05, 0, 0);
+    rotationController = new PIDController(0.05, 0, 0);
     addRequirements(m_drive);
   }
 
@@ -31,11 +41,25 @@ public class DrivetrainCommand extends CommandBase {
   @Override
   public void execute() {
     Map<String, Double> sticks = RobotContainer.getController().getSticks();
+
+    double throttle = previousThrottle + throttleController.calculate(previousThrottle, sticks.get("LSY"));
+    double rotation = previousRotation + rotationController.calculate(previousRotation, -sticks.get("RSX"));
+
     if (slowmode) {
-      m_drive.arcadeDrive(0.5 * sticks.get("LSY"), 0.5 * -sticks.get("RSX"));
+      m_drive.arcadeDrive(
+        MathUtil.clamp(sticks.get("LSY"), -0.2, 0.2), 
+        MathUtil.clamp(-sticks.get("RSX"), -0.2, 0.2));
     } else {
-      m_drive.arcadeDrive(0.8 * sticks.get("LSY"), 0.5 * -sticks.get("RSX"));
+      m_drive.arcadeDrive(
+        MathUtil.clamp(throttle, -0.5, 0.5), 
+        MathUtil.clamp(-sticks.get("RSX"), -0.3, 0.3));
     }
+
+    // if (slowmode) {
+    //   m_drive.arcadeDrive(0.5 * sticks.get("LSY"), 0.5 * -sticks.get("RSX"));
+    // } else {
+    //   m_drive.arcadeDrive(0.8 * sticks.get("LSY"), 0.5 * -sticks.get("RSX"));
+    // }
 
     if (RobotContainer.getController().getLeftStickButtonPressed()) slowmode = !slowmode;
 
@@ -44,6 +68,13 @@ public class DrivetrainCommand extends CommandBase {
     } else if (RobotContainer.getController().getBButtonPressed()) {
       m_drive.resetGyro();
     }
+
+    previousThrottle = throttle;
+    previousRotation = rotation;
+
+    SmartDashboard.putBoolean("Slowmode", slowmode);
+
+    m_drive.feed();
   }
 
   // Called once the command ends or is interrupted.

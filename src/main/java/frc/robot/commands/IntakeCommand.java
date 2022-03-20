@@ -14,33 +14,34 @@ public class IntakeCommand extends CommandBase {
   public IntakeCommand(IntakeSubsystem intake) {
     this.intake = intake;
     addRequirements(intake);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intake.setPiston(false);
+    // intake.setPiston(false);
     intake.setIntake(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(RobotContainer.controller.getLeftTrigger() > 0){
-      intake.setIntake(RobotContainer.controller.getLeftTrigger()/3);
-      intake.setPiston(true);
+    if (RobotContainer.getController().getLeftTrigger() > 0) {
+      intake.setIntake(0.4);
+      // intake.setPiston(true);
+    } else if (RobotContainer.getController().getRightTrigger() > 0) {
+      intake.setIntake(0.4);
+      // intake.setPiston(false);
     } else {
       intake.setIntake(0);
-      intake.setPiston(false);
+      // intake.setPiston(false);
     }
-    //intake and piston function
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intake.setPiston(false);
+    // intake.setPiston(false);
     intake.setIntake(0);
   }
 

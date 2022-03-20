@@ -5,13 +5,13 @@
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.IndexSubsysytem;
+import frc.robot.subsystems.IndexSubsystem;
 
 public class IndexCommand extends CommandBase {
-  private IndexSubsysytem index;
+  private IndexSubsystem index;
 
   /** Creates a new IndexCommand. */
-  public IndexCommand(IndexSubsysytem index) {
+  public IndexCommand(IndexSubsystem index) {
     
     // Use addRequirements() here to declare subsystem dependencies.
     this.index = index;
@@ -21,28 +21,22 @@ public class IndexCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (RobotContainer.controller.getRightTrigger() > 0) {
-      index.indexSpeed(.31);
-      index.indexGoPew(false);
-    } else if (RobotContainer.controller.getLeftTrigger() > 0) {
-      index.indexSpeed(.31);
-      index.indexGoPew(true);
-    } else {
-      index.indexSpeed(0);
-      index.indexGoPew(true);
-    }
-
+    index.setSpeed(0.1);
   }
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
+    if (RobotContainer.controller.getRightTrigger() > 0) {
+      index.setSpeed(.1);
+    } else {
+      index.setSpeed(0);
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    index.indexSpeed(0);
+    index.setSpeed(0);
   }
 
   // Returns true when the command should end.

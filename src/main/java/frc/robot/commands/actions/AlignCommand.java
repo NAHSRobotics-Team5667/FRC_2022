@@ -8,7 +8,6 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.utils.Limelight;
@@ -39,13 +38,10 @@ public class AlignCommand extends CommandBase {
   public void execute() {
     double output = 0;
 
-    if (RobotContainer.getController().getRightBumperPressed()) alignToggle = !alignToggle;
-
-    if (Limelight.getInstance().hasValidTarget() && alignToggle) {
+    if (Limelight.getInstance().hasValidTarget()) {
       if (Limelight.getInstance().getXAngle() != 0) {
         output = -angleController.calculate(Limelight.getInstance().getXAngle());
-        output = MathUtil.clamp(output, -0.3, 0.3);
-        // output = MathUtil.clamp(Limelight.getInstance().getXAngle(), -0.3, 0.3);
+        output = MathUtil.clamp(output, -0.3, 0.3);;
         m_drive.setDrivetrainSpeed(-output, output);
         m_drive.feed();
       }

@@ -30,9 +30,6 @@ public class Drivetrain extends SubsystemBase {
   private DifferentialDrive m_drive;
   private DifferentialDriveOdometry m_odometry;
 
-  private PIDController leftSpeedController = new PIDController(0.01, 0, 0);
-  private PIDController rightSpeedController = new PIDController(0.01, 0, 0);
-
   /** Creates a new Drivetrain. */
   public Drivetrain() {
     m_fL = new WPI_TalonFX(Constants.DriveConstants.kFrontLeftId);
@@ -40,10 +37,10 @@ public class Drivetrain extends SubsystemBase {
     m_rL = new WPI_TalonFX(Constants.DriveConstants.kBackLeftId);
     m_rR = new WPI_TalonFX(Constants.DriveConstants.kBackRightId);
 
-    m_fL.setNeutralMode(NeutralMode.Coast);
-    m_fR.setNeutralMode(NeutralMode.Coast);
-    m_rL.setNeutralMode(NeutralMode.Coast);
-    m_rR.setNeutralMode(NeutralMode.Coast);
+    m_fL.setNeutralMode(NeutralMode.Brake);
+    m_fR.setNeutralMode(NeutralMode.Brake);
+    m_rL.setNeutralMode(NeutralMode.Brake);
+    m_rR.setNeutralMode(NeutralMode.Brake);
 
     m_fR.setInverted(true);
     m_rR.setInverted(true);
@@ -110,7 +107,7 @@ public class Drivetrain extends SubsystemBase {
    * @param zRotation rotation
    */
   public void arcadeDrive(double xSpeed, double zRotation) {
-    m_drive.arcadeDrive(xSpeed, zRotation, true);
+    m_drive.arcadeDrive(xSpeed, zRotation, false);
   }
 
   public void stopMotors() {

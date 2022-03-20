@@ -13,32 +13,23 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class IndexSubsysytem extends SubsystemBase {  
+public class IndexSubsystem extends SubsystemBase {  
   public Solenoid s_indexPiston;
   public WPI_TalonFX m_indexMotor;
 
   /** Creates a new IndexSubsysytem. */
-  public IndexSubsysytem() {
-    
-   
-    s_indexPiston = new Solenoid(PneumaticsModuleType.REVPH ,Constants.IndexConstants.kSolenoidOfIntake);
+  public IndexSubsystem() {
     m_indexMotor = new WPI_TalonFX(Constants.IndexConstants.kSpinnyMotorId);
+
     m_indexMotor.setNeutralMode(NeutralMode.Brake);
-    
-  } 
-    
-  public void indexSpeed(double fastness){
-    m_indexMotor.set(ControlMode.PercentOutput, fastness);
+    // m_indexMotor.setInverted(true);
   }
-   
-  public void indexGoPew(boolean piston) {
-    s_indexPiston.set(piston);
+
+  public void setSpeed(double fastness) {
+    m_indexMotor.set(ControlMode.PercentOutput, fastness);
   }
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-
-    
   }
 }

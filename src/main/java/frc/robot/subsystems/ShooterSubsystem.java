@@ -9,6 +9,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -17,46 +18,75 @@ import frc.robot.RobotContainer;
 import frc.robot.utils.Controller;
 
 public class ShooterSubsystem extends SubsystemBase {
-  public WPI_TalonFX shootingMotor;
-  public WPI_TalonFX hoodMotor;
+  public WPI_TalonFX shootingMotorL, shootingMotorR, hoodMotor;
   public boolean shooterToggle = false;
 
+  private boolean enableShooter = false;
+
+  private double hoodAngle = 0;
+  private double initialHoodAngle;
+
   /** Creates a new ShooterSubsystem. */
-  public ShooterSubsystem() {
-    shootingMotor = new WPI_TalonFX(Constants.ShooterConstants.kShooterMotorL);
+  public ShooterSubsystem(double initialHoodAngle) {
+    shootingMotorL = new WPI_TalonFX(Constants.ShooterConstants.kShooterMotorL);
+    shootingMotorR = new WPI_TalonFX(Constants.ShooterConstants.kShooterMotorR);
     hoodMotor = new WPI_TalonFX(Constants.ShooterConstants.kHoodMotor);
-  }
-  public void shootingSpeed(double speed){
-    shootingMotor.set(ControlMode.PercentOutput, speed);
-  }
-  public double hoodAngle(){
-    double angle = hoodMotor.getSelectedSensorPosition(Constants.ShooterConstants.kHoodMotor*Constants.ShooterConstants.kHoodMotor*360/2048);
-    return angle;
-  }    
 
+    shootingMotorL.setNeutralMode(NeutralMode.Coast);
+    shootingMotorR.setNeutralMode(NeutralMode.Coast);
+    hoodMotor.setNeutralMode(NeutralMode.Brake);
 
+    shootingMotorL.setInverted(true);
 
-
-  public int rightPressed(int button){
-    if (RobotContainer.getController().getRightBumperPressed()){
-      button ++;
-    }
-
-    return button;
+    this.initialHoodAngle = initialHoodAngle;
   }
 
+  public void setSpeed(double speed){
+    shootingMotorL.set(ControlMode.PercentOutput, speed);
+  }
 
+  public double getHoodAngle() {
+    updateHoodAngle();
+    return hoodAngle;
+  }
+
+  public void updateHoodAngle() {
+    hoodAngle = ((hoodMotor.getSelectedSensorPosition() * 360) / (2048 * (1 / Constants.ShooterConstants.kHoodGearRatio))) + initialHoodAngle;
+  }
+
+  public boolean isEnabled() {
+    return enableShooter;
+  }
+
+  public void toggleShooter() {
+    enableShooter = !enableShooter;
+  }
+
+  public double limelightToAngle() {
+    return 0; // TODO: placeholder
+  }
   
-  public void shooterProtocol(boolean active){
-    //put limelight math here
+  public void setHoodAngle(double target) {
+    if (getHoodAngle() < target + 1) {
+      hoodMotor.set(0.1);
+    } else if (getHoodAngle() > target - 1) {
+      hoodMotor.set(-0.1);
+    }
+  }
+
+  public void setHoodSpeed(double speed) {
+    hoodMotor.set(speed);
   }
 
   @Override
   public void periodic() {
+    updateHoodAngle();
+
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     NetworkTableEntry tx = table.getEntry("tx");
     NetworkTableEntry ty = table.getEntry("ty");
     NetworkTableEntry ta = table.getEntry("ta");
+
     //read values periodically
     double x = tx.getDouble(0.0);
     double y = ty.getDouble(0.0);
