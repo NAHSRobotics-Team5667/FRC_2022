@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -31,11 +32,25 @@ public class ShooterCommand extends CommandBase {
     }
 
     if (m_shooter.isEnabled()) {
-      m_shooter.setSpeed(1);
-      m_shooter.setHoodAngle(m_shooter.limelightToAngle());
+      m_shooter.setSpeed(0.8);
+      // m_shooter.setHoodAngle(m_shooter.limelightToAngle());
     } else {
       m_shooter.setSpeed(0);
     }
+
+    if (RobotContainer.getController().getLeftTrigger() > 0 || RobotContainer.getController().getLeftBumper()) {
+      m_shooter.setSpeed(-0.2);
+    }
+
+    if (RobotContainer.getController().getDPad() == 90) {
+      m_shooter.setHoodSpeed(0.27); // go up
+    } else if (RobotContainer.getController().getDPad() == 270) {
+      m_shooter.setHoodSpeed(-0.27); // go down
+    } else {
+      m_shooter.setHoodSpeed(0);
+    }
+
+    SmartDashboard.putBoolean("Shooter Enabled", m_shooter.isEnabled());
   }
 
   // Called once the command ends or is interrupted.

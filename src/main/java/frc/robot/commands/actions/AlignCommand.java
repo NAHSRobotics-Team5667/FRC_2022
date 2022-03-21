@@ -41,13 +41,13 @@ public class AlignCommand extends CommandBase {
     if (Limelight.getInstance().hasValidTarget()) {
       if (Limelight.getInstance().getXAngle() != 0) {
         output = -angleController.calculate(Limelight.getInstance().getXAngle());
-        output = MathUtil.clamp(output, -0.3, 0.3);;
+        output = MathUtil.clamp(output, -0.3, 0.3);
         m_drive.setDrivetrainSpeed(-output, output);
         m_drive.feed();
       }
     }
 
-    SmartDashboard.putNumber("output", output);
+    SmartDashboard.putNumber("[ALIGN COMMAND] Output", output);
   }
 
   // Called once the command ends or is interrupted.

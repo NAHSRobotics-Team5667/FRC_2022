@@ -24,7 +24,7 @@ import edu.wpi.first.math.util.Units;
 public final class Constants {
     public static final class IntakeConstants{
         public static final int kIntakeId = 4;
-        public static final int kPistonId = 7;
+        public static final int kPistonId = 6;
     }
 
     public static final class DriveConstants {
@@ -69,9 +69,8 @@ public final class Constants {
     }
     
     public static final class IndexConstants {
-        public final static int kSpinnyMotorId = 10; // TODO: placeholder
-        public final static double kGearRatio = 1; // TODO: placeholder
-        public final static int kSolenoidOfIntake = -1; // TODO: placeholder   
+        public final static int kSpinnyMotorId = 10;
+        public final static double kGearRatio = 1;  
     }
 
     public static final class ClimbConstants {

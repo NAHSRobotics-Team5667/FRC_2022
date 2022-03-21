@@ -63,11 +63,11 @@ public class DrivetrainCommand extends CommandBase {
 
     if (RobotContainer.getController().getLeftStickButtonPressed()) slowmode = !slowmode;
 
-    if (RobotContainer.getController().getAButtonPressed()) {
-      m_drive.resetEncoders();
-    } else if (RobotContainer.getController().getBButtonPressed()) {
-      m_drive.resetGyro();
-    }
+    // if (RobotContainer.getController().getAButtonPressed()) {
+    //   m_drive.resetEncoders();
+    // } else if (RobotContainer.getController().getBButtonPressed()) {
+    //   m_drive.resetGyro();
+    // }
 
     previousThrottle = throttle;
     previousRotation = rotation;

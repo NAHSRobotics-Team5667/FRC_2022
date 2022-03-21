@@ -24,17 +24,24 @@ public class IntakeSubsystem extends SubsystemBase {
     //Intake Motor
     m_intake = new WPI_TalonFX(Constants.IntakeConstants.kIntakeId);
     m_intake.setNeutralMode(NeutralMode.Coast);
-    // m_piston = new Solenoid(PneumaticsModuleType.REVPH, 7);
+    m_piston = new Solenoid(PneumaticsModuleType.REVPH, Constants.IntakeConstants.kPistonId);
     //Intake Piston 
     //Is not correct, will fix later ; look at FRC 2021 for piston controls
     // m_piston = new Solenoid(PneumaticsModuleType.REVPH, Constants.IntakeConstants.kPistonId);
   }
+
   public void setIntake(double percentOutput){
     m_intake.set(ControlMode.PercentOutput, percentOutput);
   }
- public void setPiston(boolean piston){
-   m_piston.set(piston);
- }
+
+  public void setPiston(boolean piston) {
+    m_piston.set(piston);
+  }
+
+  public boolean getPiston() {
+    return m_piston.get();
+  }
+  
   @Override
   public void periodic() {
     // SmartDashboard.putBoolean("Piston", m_piston.get());

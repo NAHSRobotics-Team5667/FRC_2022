@@ -117,6 +117,14 @@ public class ClimbSubsystem extends SubsystemBase {
     m_rightDiagonal.set(-speed);
   }*/
 
+  public void resetLeftVerticalEncoder() {
+    m_leftVertical.setSelectedSensorPosition(0);
+  }
+  
+  public void resetRightVerticalEncoder() {
+    m_rightVertical.setSelectedSensorPosition(0);
+  }
+
   @Override
   public void periodic() {
     verticalPositions[0] = m_leftVertical.getSelectedSensorPosition();
@@ -124,6 +132,7 @@ public class ClimbSubsystem extends SubsystemBase {
     //diagonalPositions[0] = m_leftDiagonal.getSelectedSensorPosition();
     //diagonalPositions[1] = -m_rightDiagonal.getSelectedSensorPosition();
     //SmartDashboard.putNumber("diagonal height", getDiagonalPositionInches());
-    SmartDashboard.putNumber("vertical height", getVerticalPositionInches());
+    SmartDashboard.putNumber("l vert encoder", verticalPositions[0]);
+    SmartDashboard.putNumber("r vert encoder", verticalPositions[1]);
   }
 }

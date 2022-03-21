@@ -21,13 +21,15 @@ public class IndexCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    index.setSpeed(0.1);
+    index.setSpeed(0.2);
   }
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (RobotContainer.controller.getRightTrigger() > 0) {
-      index.setSpeed(.1);
+    if (RobotContainer.getController().getRightTrigger() > 0) {
+      index.setSpeed(0.2);
+    } else if (RobotContainer.getController().getLeftBumper()) {
+      index.setSpeed(-0.2);
     } else {
       index.setSpeed(0);
     }

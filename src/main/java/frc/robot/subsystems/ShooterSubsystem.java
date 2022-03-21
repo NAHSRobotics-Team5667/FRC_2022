@@ -37,12 +37,14 @@ public class ShooterSubsystem extends SubsystemBase {
     hoodMotor.setNeutralMode(NeutralMode.Brake);
 
     shootingMotorL.setInverted(true);
+    hoodMotor.setInverted(true);
 
     this.initialHoodAngle = initialHoodAngle;
   }
 
   public void setSpeed(double speed){
     shootingMotorL.set(ControlMode.PercentOutput, speed);
+    shootingMotorR.set(speed);
   }
 
   public double getHoodAngle() {
@@ -96,5 +98,8 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("LimelightX", x);
     SmartDashboard.putNumber("LimelightY", y);
     SmartDashboard.putNumber("LimelightArea", area);
+
+    SmartDashboard.putNumber("Hood Output", hoodMotor.get());
+    SmartDashboard.putNumber("Hood Angle", getHoodAngle());
   }
 }

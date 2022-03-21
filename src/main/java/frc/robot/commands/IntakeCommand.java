@@ -10,6 +10,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 
 public class IntakeCommand extends CommandBase {
   private IntakeSubsystem intake;
+  private boolean pistonExtend = false;
   /** Creates a new IntakeCommand. */
   public IntakeCommand(IntakeSubsystem intake) {
     this.intake = intake;
@@ -36,6 +37,12 @@ public class IntakeCommand extends CommandBase {
       intake.setIntake(0);
       // intake.setPiston(false);
     }
+
+    if (RobotContainer.getController().getYButtonPressed()) {
+      pistonExtend = !pistonExtend;
+    }
+
+    intake.setPiston(pistonExtend);
   }
 
   // Called once the command ends or is interrupted.

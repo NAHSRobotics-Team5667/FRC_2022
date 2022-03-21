@@ -41,6 +41,11 @@ public class ClimbCommand extends CommandBase {
       m_climbSubsystem.setVerticalSpeed(0.0);
     }
 
+    if (RobotContainer.getController().getAButton()) {
+      m_climbSubsystem.resetLeftVerticalEncoder();
+      m_climbSubsystem.resetRightVerticalEncoder();
+    }
+
     //Moves the diagonal climb depending on the dpad button pressed
     /*if (RobotContainer.getController().getDPad() == 90) {
       //Extend
