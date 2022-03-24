@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.utils.Controller;
+import frc.robot.utils.Limelight;
 
 public class ShooterSubsystem extends SubsystemBase {
   public WPI_TalonFX shootingMotorL, shootingMotorR, hoodMotor;
@@ -80,6 +81,34 @@ public class ShooterSubsystem extends SubsystemBase {
     hoodMotor.set(speed);
   }
 
+  public double getShooterSpeed() {
+    return shootingMotorL.get();
+  }
+
+  public void setShooterSpeedPolynomial(double x) {
+    double output = 0.686 - (0.00626 * x) - (0.000236 * Math.pow(x, 2)) + (0.00000382 * Math.pow(x, 3)) + (0.000000912 * Math.pow(x, 4));
+    setSpeed(output);
+  }
+
+  public double getShooterSpeedPolynomial(double x) {
+    double output = 0.686 - (0.00626 * x) - (0.000236 * Math.pow(x, 2)) + (0.00000382 * Math.pow(x, 3)) + (0.000000912 * Math.pow(x, 4));
+    return output;
+  }
+
+  public void setShooterSpeedLinear(double x) {
+    double output = -(0.00559 * x) + 0.679;
+    setSpeed(output);
+  }
+
+  public double getShooterSpeedLinear(double x) {
+    double output = -(0.00559 * x) + 0.679;
+    return output;
+  }
+
+  public void resetHoodEncoder() {
+    hoodMotor.setSelectedSensorPosition(0);
+  }
+
   @Override
   public void periodic() {
     updateHoodAngle();
@@ -94,12 +123,16 @@ public class ShooterSubsystem extends SubsystemBase {
     double y = ty.getDouble(0.0);
     double area = ta.getDouble(0.0);
 
-    //post to smart dashboard periodically
-    SmartDashboard.putNumber("LimelightX", x);
-    SmartDashboard.putNumber("LimelightY", y);
-    SmartDashboard.putNumber("LimelightArea", area);
+    SmartDashboard.putNumber("Limelight X Angle", Limelight.getInstance().getXAngle());
+    SmartDashboard.putNumber("Limelight Y Angle", Limelight.getInstance().getYAngle());
 
-    SmartDashboard.putNumber("Hood Output", hoodMotor.get());
-    SmartDashboard.putNumber("Hood Angle", getHoodAngle());
+    // //post to smart dashboard periodically
+    // SmartDashboard.putNumber("LimelightX", x);
+    // SmartDashboard.putNumber("LimelightY", y);
+    // SmartDashboard.putNumber("LimelightArea", area);
+
+    // SmartDashboard.putNumber("Hood Output", hoodMotor.get());
+    // SmartDashboard.putNumber("Hood Angle", getHoodAngle());
+    // SmartDashboard.putNumber("Hood Encoder", hoodMotor.getSelectedSensorPosition());
   }
 }

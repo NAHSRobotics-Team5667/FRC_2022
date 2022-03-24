@@ -38,13 +38,13 @@ public final class Constants {
 
         public final static double kRamseteB = -1; // TODO: placeholder
         public final static double kRamseteZeta = -1; // TODO: placeholder
-        public final static double ksVolts = -1; // TODO: placeholder
-        public final static double kvVoltSecondsPerMeter = -1; // TODO: placeholder
-        public final static double kaVoltSecondsSquaredPerMeter = -1; // TODO: placeholder
+        public final static double ksVolts = 0.7507; // TODO: placeholder
+        public final static double kvVoltSecondsPerMeter = 2.6699; // TODO: placeholder
+        public final static double kaVoltSecondsSquaredPerMeter = 0.573; // TODO: placeholder
 
         public final static double kTrackWidthMeters = -1;
         public final static DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackWidthMeters);
-        public static  final double kPDriveVel = 0.02;
+        public static  final double kPDriveVel = 3.9537;
     }
 
     public static final class PathWeaver {
@@ -65,7 +65,7 @@ public final class Constants {
         public final static int kShooterMotorR = 7;
         public final static int kShooterMotorL = 6;
 
-        public final static double kHoodGearRatio = 1 / 2;
+        public final static double kHoodGearRatio = 0.5;
     }
     
     public static final class IndexConstants {

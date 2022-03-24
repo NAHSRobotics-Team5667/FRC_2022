@@ -4,45 +4,45 @@
 
 package frc.robot.commands.actions;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.Drivetrain;
 
-public class RunIntake extends CommandBase {
-  private IntakeSubsystem m_intake;
-
-  private double runtime;
-  private double initialTime = 0;
-  /** Creates a new Intake. */
-  public RunIntake(IntakeSubsystem m_intake, double runtime) {
-    this.m_intake = m_intake;
-    this.runtime = runtime;
-    addRequirements(m_intake);
+public class GoDistance extends CommandBase {
+  private Drivetrain m_drive;
+  private double distance;
+  /** Creates a new GoDistance. */
+  public GoDistance(Drivetrain m_drive, double distance) {
+    this.m_drive = m_drive;
+    this.distance = distance;
+    addRequirements(m_drive);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_intake.setIntake(0);
-    initialTime = Timer.getFPGATimestamp();
+    m_drive.setDrivetrainSpeed(0, 0);
+    m_drive.resetEncoders();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intake.setIntake(0.7);
+    if (distance > 0) {
+      m_drive.setDrivetrainSpeed(0.4, 0.4);
+    } else if (distance < 0) {
+      m_drive.setDrivetrainSpeed(-0.4, -0.4);
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_intake.setIntake(0);
+    m_drive.setDrivetrainSpeed(0, 0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Timer.getFPGATimestamp() - initialTime > runtime;
+    return Math.abs(m_drive.getStraightDistance()) >= Math.abs(distance);
   }
 }

@@ -28,10 +28,10 @@ public class IntakeCommand extends CommandBase {
   @Override
   public void execute() {
     if (RobotContainer.getController().getLeftTrigger() > 0) {
-      intake.setIntake(0.4);
+      intake.setIntake(0.7);
       // intake.setPiston(true);
     } else if (RobotContainer.getController().getRightTrigger() > 0) {
-      intake.setIntake(0.4);
+      intake.setIntake(0.7);
       // intake.setPiston(false);
     } else {
       intake.setIntake(0);

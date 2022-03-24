@@ -4,7 +4,11 @@
 
 package frc.robot;
 
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
 import frc.robot.Constants.PathWeaver;
@@ -14,6 +18,11 @@ import frc.robot.commands.IndexCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.commands.actions.AlignCommand;
+import frc.robot.commands.actions.GoDistance;
+import frc.robot.commands.actions.RunIntake;
+import frc.robot.commands.actions.SetPiston;
+import frc.robot.commands.actions.Shoot;
+import frc.robot.commands.actions.Wait;
 import frc.robot.commands.auto.TrajectoryFollower;
 import frc.robot.subsystems.ClimbSubsystem;
 import frc.robot.subsystems.Drivetrain;
@@ -22,6 +31,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.utils.Controller;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -80,20 +90,21 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return getAuto(0);
+    return getAuto();
     // return new AlignCommand(m_drive);
   }
 
-  public SequentialCommandGroup getAuto(int index) {
-    switch(index) {
-      case 0:
-        return new SequentialCommandGroup(
-          TrajectoryFollower.getRamseteCommand(PathWeaver.getTrajectory("forward"), m_drive),
-          TrajectoryFollower.getRamseteCommand(PathWeaver.getTrajectory("backward"), m_drive),
-          TrajectoryFollower.getRamseteCommand(PathWeaver.getTrajectory("onward"), m_drive)
-        );
-      default:
-        return null;
-    }
+  public SequentialCommandGroup getAuto() {
+    return new SequentialCommandGroup(
+      new SetPiston(m_intake, true),
+      new ParallelCommandGroup(
+        new RunIntake(m_intake, 5),
+        new GoDistance(m_drive, -2)
+      ),
+      new Wait(1),
+      new GoDistance(m_drive, 1),
+      new AlignCommand(m_drive),
+      new Shoot(m_shooter, m_intake, m_index)
+    );
   }
 }

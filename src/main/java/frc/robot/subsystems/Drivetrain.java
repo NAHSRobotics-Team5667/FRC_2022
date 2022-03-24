@@ -48,7 +48,10 @@ public class Drivetrain extends SubsystemBase {
     m_rL.follow(m_fL);
     m_rR.follow(m_fR);
 
+    resetEncoders();
+
     m_gyro = new AHRS(SPI.Port.kMXP);
+    m_gyro.calibrate();
 
     m_drive = new DifferentialDrive(m_fL, m_fR);
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
@@ -65,6 +68,14 @@ public class Drivetrain extends SubsystemBase {
    */
   public double getAngle() {
     return m_gyro.getAngle();
+  }
+
+  public double getAngleEncoders() {
+    return ((odometryValues[0] - odometryValues[1]) * (1 / 286.3017771));
+  }
+
+  public double getStraightDistance() {
+    return ((odometryValues[0] * (0.0412 / 2048)) + (odometryValues[1] * (0.0412 / 2048))) / 2;
   }
 
   public void resetGyro() {
@@ -164,14 +175,15 @@ public class Drivetrain extends SubsystemBase {
     m_rR.set(ControlMode.PercentOutput, m_fR.get());
     m_rL.set(ControlMode.PercentOutput, m_fL.get());
 
-    SmartDashboard.putNumber("FL Speed", m_fL.get());
-    SmartDashboard.putNumber("FR Speed", m_fR.get());
-    SmartDashboard.putNumber("BL Speed", m_rL.get());
-    SmartDashboard.putNumber("BR Speed", m_rR.get());
-
     SmartDashboard.putNumber("Left Encoder", odometryValues[0]);
     SmartDashboard.putNumber("Right Encoder", odometryValues[1]);
 
+    SmartDashboard.putNumber("Left Distance", odometryValues[0] * (0.0412 / 2048));
+    SmartDashboard.putNumber("Right Distance", odometryValues[1] * (0.0412 / 2048));
+
     SmartDashboard.putNumber("Angle", getAngle());
+    SmartDashboard.putNumber("Angle (Encoder)", getAngleEncoders());
+
+    m_drive.feed();
   }
 }

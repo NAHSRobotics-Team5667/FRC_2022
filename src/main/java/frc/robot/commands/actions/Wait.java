@@ -6,43 +6,32 @@ package frc.robot.commands.actions;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
 
-public class RunIntake extends CommandBase {
-  private IntakeSubsystem m_intake;
+public class Wait extends CommandBase {
+  private double waitTime;
+  private double initialTime;
 
-  private double runtime;
-  private double initialTime = 0;
-  /** Creates a new Intake. */
-  public RunIntake(IntakeSubsystem m_intake, double runtime) {
-    this.m_intake = m_intake;
-    this.runtime = runtime;
-    addRequirements(m_intake);
+  public Wait(double waitTime) {
+    this.waitTime = waitTime;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_intake.setIntake(0);
     initialTime = Timer.getFPGATimestamp();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    m_intake.setIntake(0.7);
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    m_intake.setIntake(0);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Timer.getFPGATimestamp() - initialTime > runtime;
+    return Timer.getFPGATimestamp() - initialTime > waitTime;
   }
 }

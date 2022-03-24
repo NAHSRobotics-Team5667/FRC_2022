@@ -46,8 +46,6 @@ public class AlignCommand extends CommandBase {
         m_drive.feed();
       }
     }
-
-    SmartDashboard.putNumber("[ALIGN COMMAND] Output", output);
   }
 
   // Called once the command ends or is interrupted.
