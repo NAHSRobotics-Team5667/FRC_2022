@@ -6,6 +6,7 @@ package frc.robot.commands.actions;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.DriveConstants;
@@ -17,6 +18,8 @@ public class AlignCommand extends CommandBase {
   private PIDController angleController;
 
   public boolean alignToggle;
+
+  private double initialTime = 0;
 
   /** Creates a new AlignCommand. */
   public AlignCommand(Drivetrain m_drive) {
@@ -31,6 +34,7 @@ public class AlignCommand extends CommandBase {
   @Override
   public void initialize() {
     Limelight.getInstance().turnLightOn();
+    initialTime = Timer.getFPGATimestamp();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -57,6 +61,6 @@ public class AlignCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(Limelight.getInstance().getXAngle()) < 2);
+    return (Math.abs(Limelight.getInstance().getXAngle()) < 2) || Timer.getFPGATimestamp() - initialTime > 2;
   }
 }

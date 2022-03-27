@@ -16,6 +16,7 @@ import frc.robot.subsystems.Drivetrain;
 public class DrivetrainCommand extends CommandBase {
   private Drivetrain m_drive;
   public boolean slowmode = false;
+  public boolean beastmode = false;
 
   private PIDController throttleController, rotationController;
 
@@ -49,10 +50,14 @@ public class DrivetrainCommand extends CommandBase {
       m_drive.arcadeDrive(
         MathUtil.clamp(sticks.get("LSY"), -0.2, 0.2), 
         MathUtil.clamp(-sticks.get("RSX"), -0.2, 0.2));
+    } else if (RobotContainer.getBeastMode()) {
+      m_drive.arcadeDrive(
+        MathUtil.clamp(throttle, -1, 1), 
+        MathUtil.clamp(-sticks.get("RSX"), -0.4, 0.4));
     } else {
       m_drive.arcadeDrive(
-        MathUtil.clamp(throttle, -0.5, 0.5), 
-        MathUtil.clamp(-sticks.get("RSX"), -0.3, 0.3));
+        MathUtil.clamp(throttle, -0.8, 0.8), 
+        MathUtil.clamp(-sticks.get("RSX"), -0.4, 0.4));
     }
 
     // if (slowmode) {
@@ -62,6 +67,7 @@ public class DrivetrainCommand extends CommandBase {
     // }
 
     if (RobotContainer.getController().getLeftStickButtonPressed()) slowmode = !slowmode;
+    // if (RobotContainer.getController().getAButtonPressed()) beastmode = !beastmode;
 
     // if (RobotContainer.getController().getAButtonPressed()) {
     //   m_drive.resetEncoders();
@@ -73,6 +79,7 @@ public class DrivetrainCommand extends CommandBase {
     previousRotation = rotation;
 
     SmartDashboard.putBoolean("Slowmode", slowmode);
+    // SmartDashboard.putBoolean("Beastmode", beastmode);
 
     m_drive.feed();
   }

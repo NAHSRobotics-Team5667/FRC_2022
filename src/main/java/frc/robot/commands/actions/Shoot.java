@@ -38,16 +38,13 @@ public class Shoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooter.setShooterSpeedPolynomial(Limelight.getInstance().getYAngle());
-
-    if (Timer.getFPGATimestamp() - initialTime > 3 && Timer.getFPGATimestamp() - initialTime < 5) {
+    if (Timer.getFPGATimestamp() - initialTime > 2) {
       m_intake.setIntake(0.7);
-      m_index.setSpeed(0.2);
-    }
-
-    if (Timer.getFPGATimestamp() - initialTime > 7) {
+      m_index.setSpeed(0.3);
+    } else {
+      m_shooter.setShooterSpeedLinear(Limelight.getInstance().getYAngle());
+      m_index.setSpeed(-0.2);
       m_intake.setIntake(0.7);
-      m_index.setSpeed(0.2);
     }
   }
 

@@ -6,6 +6,9 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
@@ -44,9 +47,23 @@ public class Drivetrain extends SubsystemBase {
 
     m_fR.setInverted(true);
     m_rR.setInverted(true);
+    // m_rR.setInverted(true);
 
-    m_rL.follow(m_fL);
-    m_rR.follow(m_fR);
+    // m_rL.set(ControlMode.Follower, m_fL.getDeviceID());
+    // m_rR.set(ControlMode.Follower, m_fR.getDeviceID());
+
+    // m_rL.follow(m_fL);
+    // m_rR.follow(m_fR);
+
+    // m_fL.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 20, 25, 1.0));
+    // m_fR.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 20, 25, 1.0));
+    // m_rL.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 20, 25, 1.0));
+    // m_rR.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, 20, 25, 1.0));
+
+    // m_fL.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 10, 15, 0.5));
+    // m_fR.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 10, 15, 0.5));
+    // m_rL.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 10, 15, 0.5));
+    // m_rR.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 10, 15, 0.5));
 
     resetEncoders();
 
@@ -76,6 +93,14 @@ public class Drivetrain extends SubsystemBase {
 
   public double getStraightDistance() {
     return ((odometryValues[0] * (0.0412 / 2048)) + (odometryValues[1] * (0.0412 / 2048))) / 2;
+  }
+
+  public double getLeftDistance() {
+    return (odometryValues[0] * (0.0412 / 2048));
+  }
+
+  public double getRightDistance() {
+    return (odometryValues[1] * (0.0412 / 2048));
   }
 
   public void resetGyro() {
@@ -175,13 +200,13 @@ public class Drivetrain extends SubsystemBase {
     m_rR.set(ControlMode.PercentOutput, m_fR.get());
     m_rL.set(ControlMode.PercentOutput, m_fL.get());
 
-    SmartDashboard.putNumber("Left Encoder", odometryValues[0]);
-    SmartDashboard.putNumber("Right Encoder", odometryValues[1]);
+    // SmartDashboard.putNumber("Left Encoder", odometryValues[0]);
+    // SmartDashboard.putNumber("Right Encoder", odometryValues[1]);
 
     SmartDashboard.putNumber("Left Distance", odometryValues[0] * (0.0412 / 2048));
     SmartDashboard.putNumber("Right Distance", odometryValues[1] * (0.0412 / 2048));
 
-    SmartDashboard.putNumber("Angle", getAngle());
+    // SmartDashboard.putNumber("Angle", getAngle());
     SmartDashboard.putNumber("Angle (Encoder)", getAngleEncoders());
 
     m_drive.feed();

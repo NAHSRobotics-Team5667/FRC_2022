@@ -4,9 +4,12 @@
 
 package frc.robot.commands;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.utils.Limelight;
@@ -14,6 +17,8 @@ import frc.robot.utils.Limelight;
 public class ShooterCommand extends CommandBase {
   private ShooterSubsystem m_shooter;
   private double shooterSpeed = 0;
+
+  private boolean lowerHubMode = false;
 
   /** Creates a new ShooterCommand. */
   public ShooterCommand(ShooterSubsystem m_shooter) {
@@ -35,12 +40,29 @@ public class ShooterCommand extends CommandBase {
       m_shooter.toggleShooter();
     }
 
+    if (RobotContainer.getController().getRightStickButtonPressed()) {
+      lowerHubMode = !lowerHubMode;
+    }
+
     if (m_shooter.isEnabled()) {
+      m_shooter.setNeutralMode(NeutralMode.Coast);
       // m_shooter.setSpeed(shooterSpeed);
-      m_shooter.setShooterSpeedPolynomial(Limelight.getInstance().getYAngle());
-      // m_shooter.setShooterSpeedLinear(Limelight.getInstance().getYAngle());
+      // m_shooter.setShooterSpeedPolynomial(Limelight.getInstance().getYAngle());
+      if (!lowerHubMode) {
+        m_shooter.setShooterSpeedLinear(Limelight.getInstance().getYAngle());
+      } else {
+        m_shooter.setSpeed(0.45);
+      }
       // m_shooter.setHoodAngle(m_shooter.limelightToAngle());
+    } else if (RobotContainer.getBeastMode()) {
+      m_shooter.setNeutralMode(NeutralMode.Brake);
+      if (RobotContainer.getController().getRightTrigger() > 0) {
+        m_shooter.setSpeed(0.2);
+      } else {
+        m_shooter.setSpeed(0);
+      }
     } else {
+      m_shooter.setNeutralMode(NeutralMode.Coast);
       m_shooter.setSpeed(0);
     }
 
@@ -59,8 +81,7 @@ public class ShooterCommand extends CommandBase {
     }
 
     SmartDashboard.putBoolean("Shooter Enabled", m_shooter.isEnabled());
-    SmartDashboard.putNumber("Shooter Value (Poly)", m_shooter.getShooterSpeedPolynomial(Limelight.getInstance().getYAngle()));
-    SmartDashboard.putNumber("Shooter Value (Linear)", m_shooter.getShooterSpeedLinear(Limelight.getInstance().getYAngle()));
+    SmartDashboard.putBoolean("Lower Hub", lowerHubMode);
   }
 
   // Called once the command ends or is interrupted.

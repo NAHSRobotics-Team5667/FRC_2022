@@ -132,7 +132,7 @@ public class ClimbSubsystem extends SubsystemBase {
     //diagonalPositions[0] = m_leftDiagonal.getSelectedSensorPosition();
     //diagonalPositions[1] = -m_rightDiagonal.getSelectedSensorPosition();
     //SmartDashboard.putNumber("diagonal height", getDiagonalPositionInches());
-    SmartDashboard.putNumber("l vert encoder", verticalPositions[0]);
-    SmartDashboard.putNumber("r vert encoder", verticalPositions[1]);
+    // SmartDashboard.putNumber("l vert encoder", verticalPositions[0]);
+    // SmartDashboard.putNumber("r vert encoder", verticalPositions[1]);
   }
 }

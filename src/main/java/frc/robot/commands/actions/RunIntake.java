@@ -6,17 +6,20 @@ package frc.robot.commands.actions;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.IndexSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class RunIntake extends CommandBase {
   private IntakeSubsystem m_intake;
+  private IndexSubsystem m_index;
 
   private double runtime;
   private double initialTime = 0;
   /** Creates a new Intake. */
-  public RunIntake(IntakeSubsystem m_intake, double runtime) {
+  public RunIntake(IntakeSubsystem m_intake, IndexSubsystem m_index, double runtime) {
     this.m_intake = m_intake;
+    this.m_index = m_index;
     this.runtime = runtime;
     addRequirements(m_intake);
   }
@@ -32,6 +35,7 @@ public class RunIntake extends CommandBase {
   @Override
   public void execute() {
     m_intake.setIntake(0.7);
+    m_index.setSpeed(-0.2);
   }
 
   // Called once the command ends or is interrupted.

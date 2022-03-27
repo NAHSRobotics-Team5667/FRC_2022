@@ -50,6 +50,8 @@ public class RobotContainer {
   private IndexSubsystem m_index;
   private ShooterSubsystem m_shooter;
 
+  public static boolean beastmode = false;
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     m_drive = new Drivetrain();
@@ -75,12 +77,18 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     JoystickButton rightBumper = new JoystickButton(getController(), Constants.ControllerConstants.BUMPER_RIGHT_PORT);
+    JoystickButton a = new JoystickButton(getController(), Constants.ControllerConstants.BUTTON_A_PORT);
 
     rightBumper.whenPressed(new AlignCommand(m_drive));
+    a.whenPressed(() -> beastmode = !beastmode);
   }
 
   public static Controller getController() {
     return controller;
+  }
+
+  public static boolean getBeastMode() {
+    return beastmode;
   }
 
   /**
@@ -89,22 +97,31 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return getAuto();
-    // return new AlignCommand(m_drive);
+    return getAuto(1);
+    // return new GoDistance(m_drive, 3);
   }
 
-  public SequentialCommandGroup getAuto() {
-    return new SequentialCommandGroup(
-      new SetPiston(m_intake, true),
-      new ParallelCommandGroup(
-        new RunIntake(m_intake, 5),
-        new GoDistance(m_drive, -2)
-      ),
-      new Wait(1),
-      new GoDistance(m_drive, 1),
-      new AlignCommand(m_drive),
-      new Shoot(m_shooter, m_intake, m_index)
-    );
+  public SequentialCommandGroup getAuto(int index) {
+    switch (index) {
+      case 0:
+        return new SequentialCommandGroup(
+          new GoDistance(m_drive, -1.5),
+          new AlignCommand(m_drive),
+          new Shoot(m_shooter, m_intake, m_index)
+        );
+      case 1:
+        return new SequentialCommandGroup(
+          new SetPiston(m_intake, true),
+          new ParallelCommandGroup(
+            new RunIntake(m_intake, m_index, 5),
+            new GoDistance(m_drive, -2)
+          ),
+          new GoDistance(m_drive, 1.5),
+          new AlignCommand(m_drive),
+          new Shoot(m_shooter, m_intake, m_index)
+        );
+      default:
+        return null;
+    }
   }
 }

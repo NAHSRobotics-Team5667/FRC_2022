@@ -11,6 +11,8 @@ import frc.robot.subsystems.IntakeSubsystem;
 public class IntakeCommand extends CommandBase {
   private IntakeSubsystem intake;
   private boolean pistonExtend = false;
+
+  private double intakeCounter = 0;
   /** Creates a new IntakeCommand. */
   public IntakeCommand(IntakeSubsystem intake) {
     this.intake = intake;
@@ -27,13 +29,16 @@ public class IntakeCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (RobotContainer.getController().getLeftTrigger() > 0) {
-      intake.setIntake(0.7);
+    if (RobotContainer.getController().getLeftTrigger() > 0 || RobotContainer.getController().getRightTrigger() > 0) {
+      intakeCounter++;
+      if (intakeCounter < 5) {
+        intake.setIntake(1);
+      } else {
+        intake.setIntake(0.7);
+      }
       // intake.setPiston(true);
-    } else if (RobotContainer.getController().getRightTrigger() > 0) {
-      intake.setIntake(0.7);
-      // intake.setPiston(false);
     } else {
+      intakeCounter = 0;
       intake.setIntake(0);
       // intake.setPiston(false);
     }

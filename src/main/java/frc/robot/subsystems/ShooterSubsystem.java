@@ -96,13 +96,19 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void setShooterSpeedLinear(double x) {
-    double output = -(0.00559 * x) + 0.679;
+    // double output = -(0.00559 * x) + 0.679;
+    double output = -(0.00559 * x) + 0.69;
     setSpeed(output);
   }
 
   public double getShooterSpeedLinear(double x) {
     double output = -(0.00559 * x) + 0.679;
     return output;
+  }
+
+  public void setNeutralMode(NeutralMode neutralMode) {
+    shootingMotorL.setNeutralMode(neutralMode);
+    shootingMotorR.setNeutralMode(neutralMode);
   }
 
   public void resetHoodEncoder() {
@@ -113,15 +119,15 @@ public class ShooterSubsystem extends SubsystemBase {
   public void periodic() {
     updateHoodAngle();
 
-    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-    NetworkTableEntry tx = table.getEntry("tx");
-    NetworkTableEntry ty = table.getEntry("ty");
-    NetworkTableEntry ta = table.getEntry("ta");
+    // NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+    // NetworkTableEntry tx = table.getEntry("tx");
+    // NetworkTableEntry ty = table.getEntry("ty");
+    // NetworkTableEntry ta = table.getEntry("ta");
 
-    //read values periodically
-    double x = tx.getDouble(0.0);
-    double y = ty.getDouble(0.0);
-    double area = ta.getDouble(0.0);
+    // //read values periodically
+    // double x = tx.getDouble(0.0);
+    // double y = ty.getDouble(0.0);
+    // double area = ta.getDouble(0.0);
 
     SmartDashboard.putNumber("Limelight X Angle", Limelight.getInstance().getXAngle());
     SmartDashboard.putNumber("Limelight Y Angle", Limelight.getInstance().getYAngle());
