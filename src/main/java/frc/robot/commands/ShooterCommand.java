@@ -49,7 +49,7 @@ public class ShooterCommand extends CommandBase {
       // m_shooter.setSpeed(shooterSpeed);
       // m_shooter.setShooterSpeedPolynomial(Limelight.getInstance().getYAngle());
       if (!lowerHubMode) {
-        m_shooter.setShooterSpeedLinear(Limelight.getInstance().getYAngle());
+        m_shooter.setSpeed(0.6); // TODO: CHANGE THIS VALUE DEPENDING ON BENJAMIN'S RESULTS
       } else {
         m_shooter.setSpeed(0.45);
       }
